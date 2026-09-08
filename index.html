@@ -7,15 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #26a69a; /* Ardaykaab Teal */
-            --primary-dark: #00796b;
-            --bg-color: #f4f7f6;
-            --surface: #ffffff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+            --primary: #ea580c; /* Ardaykaab Orange */
+            --primary-dark: #c2410c;
+            --bg-color: #0f172a; /* Dark background */
+            --surface: #1e293b; /* Card background */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,14 +68,14 @@
         }
 
         .nav-item:hover, .nav-item.active {
-            background-color: #e6f7f5;
-            color: var(--primary-dark);
+            background-color: #1e293b;
+            color: var(--primary);
             border-left: 4px solid var(--primary);
         }
         
         .nav-item .score-badge {
             float: right;
-            background: #e2e8f0;
+            background: #334155;
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 0.8rem;
@@ -146,8 +146,8 @@
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
-        th { background-color: #f8fafc; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;}
-        tr:hover td { background-color: #f8fafc; cursor: pointer; }
+        th { background-color: #0f172a; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;}
+        tr:hover td { background-color: #334155; cursor: pointer; }
         
         .score-high { color: #10b981; font-weight: 600; }
         .score-med { color: #f59e0b; font-weight: 600; }
@@ -168,10 +168,10 @@
         .student-title p { color: var(--text-muted); }
         .student-score {
             text-align: center;
-            background: #e6f7f5;
+            background: #0f172a;
             padding: 16px 32px;
             border-radius: 12px;
-            color: var(--primary-dark);
+            color: var(--primary);
         }
         .student-score span { display: block; font-size: 2rem; font-weight: 700; }
         
@@ -189,7 +189,7 @@
         }
         .feedback-card.positive { border-top: 4px solid #10b981; }
         .feedback-card.improve { border-top: 4px solid #f59e0b; }
-        .feedback-card h3 { margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+        .feedback-card h3 { margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: var(--text-main); font-weight: 600;}
         
         /* Toggle & Image Styles */
         .toggle-container {
@@ -211,8 +211,8 @@
         }
         .toggle-btn.active {
             border-color: var(--primary);
-            color: var(--primary-dark);
-            background: #e6f7f5;
+            color: var(--primary);
+            background: #334155;
         }
         
         .screenshots-section {
@@ -267,16 +267,76 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2>📋 Clipboard Grading</h2>
+            <h2>Clipboard Grading</h2>
         </div>
         <ul class="nav-list" id="navList">
-            <li class="nav-item active" onclick="showDashboard()">📊 Dashboard</li>
-            ${studentData.map((s, index) => `
-                <li class="nav-item" id="nav-${index}" onclick="showStudent(${index})">
-                    ${s.github}
-                    <span class="score-badge">${s.score}</span>
+            <li class="nav-item active" onclick="showDashboard()">Dashboard</li>
+            
+                <li class="nav-item" id="nav-0" onclick="showStudent(0)">
+                    abdifataahali
+                    <span class="score-badge">9.25</span>
                 </li>
-            `).join('')}
+            
+                <li class="nav-item" id="nav-1" onclick="showStudent(1)">
+                    ZakiOmer22
+                    <span class="score-badge">8.25</span>
+                </li>
+            
+                <li class="nav-item" id="nav-2" onclick="showStudent(2)">
+                    cawoosman95-oss
+                    <span class="score-badge">9.00</span>
+                </li>
+            
+                <li class="nav-item" id="nav-3" onclick="showStudent(3)">
+                    suhaybali689-ui
+                    <span class="score-badge">9.25</span>
+                </li>
+            
+                <li class="nav-item" id="nav-4" onclick="showStudent(4)">
+                    ZakiBarte
+                    <span class="score-badge">7.75</span>
+                </li>
+            
+                <li class="nav-item" id="nav-5" onclick="showStudent(5)">
+                    nuuramyaasin123-hue
+                    <span class="score-badge">7.75</span>
+                </li>
+            
+                <li class="nav-item" id="nav-6" onclick="showStudent(6)">
+                    inamahamud693-code
+                    <span class="score-badge">8.50</span>
+                </li>
+            
+                <li class="nav-item" id="nav-7" onclick="showStudent(7)">
+                    mohamedk-11
+                    <span class="score-badge">9.50</span>
+                </li>
+            
+                <li class="nav-item" id="nav-8" onclick="showStudent(8)">
+                    mohamedkiyaas
+                    <span class="score-badge">8.75</span>
+                </li>
+            
+                <li class="nav-item" id="nav-9" onclick="showStudent(9)">
+                    hamdanuur5837-tech
+                    <span class="score-badge">7.75</span>
+                </li>
+            
+                <li class="nav-item" id="nav-10" onclick="showStudent(10)">
+                    Abdifatah2024
+                    <span class="score-badge">8.50</span>
+                </li>
+            
+                <li class="nav-item" id="nav-11" onclick="showStudent(11)">
+                    cabdisalaan10
+                    <span class="score-badge">9.00</span>
+                </li>
+            
+                <li class="nav-item" id="nav-12" onclick="showStudent(12)">
+                    muniitaa123
+                    <span class="score-badge">8.25</span>
+                </li>
+            
         </ul>
     </aside>
 
@@ -291,11 +351,11 @@
             <div class="summary-cards">
                 <div class="card">
                     <h3>Total Submissions</h3>
-                    <div class="value">${studentData.length}</div>
+                    <div class="value">13</div>
                 </div>
                 <div class="card">
                     <h3>Average Score</h3>
-                    <div class="value">${(studentData.reduce((acc, s) => acc + parseFloat(s.score), 0) / studentData.length).toFixed(2)}</div>
+                    <div class="value">8.58</div>
                 </div>
             </div>
 
@@ -309,57 +369,585 @@
                     </tr>
                 </thead>
                 <tbody>
-                    ${summaryData.map((s, idx) => `
-                        <tr onclick="showStudent(${idx})">
-                            <td><strong>${s.github}</strong></td>
-                            <td>${s.design}</td>
-                            <td>${s.code}</td>
-                            <td class="${s.overall >= 8.5 ? 'score-high' : 'score-med'}">${s.overall} / 10</td>
+                    
+                        <tr onclick="showStudent(0)">
+                            <td><strong>abdifataahali</strong></td>
+                            <td>9</td>
+                            <td>9.5</td>
+                            <td class="score-high">9.25 / 10</td>
                         </tr>
-                    `).join('')}
+                    
+                        <tr onclick="showStudent(1)">
+                            <td><strong>ZakiOmer22</strong></td>
+                            <td>8.5</td>
+                            <td>8</td>
+                            <td class="score-med">8.25 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(2)">
+                            <td><strong>cawoosman95-oss</strong></td>
+                            <td>9</td>
+                            <td>9</td>
+                            <td class="score-high">9 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(3)">
+                            <td><strong>suhaybali689-ui</strong></td>
+                            <td>9.5</td>
+                            <td>9</td>
+                            <td class="score-high">9.25 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(4)">
+                            <td><strong>ZakiBarte</strong></td>
+                            <td>8</td>
+                            <td>7.5</td>
+                            <td class="score-med">7.75 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(5)">
+                            <td><strong>nuuramyaasin123-hue</strong></td>
+                            <td>7.5</td>
+                            <td>8</td>
+                            <td class="score-med">7.75 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(6)">
+                            <td><strong>inamahamud693-code</strong></td>
+                            <td>8.5</td>
+                            <td>8.5</td>
+                            <td class="score-high">8.5 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(7)">
+                            <td><strong>mohamedk-11</strong></td>
+                            <td>9.5</td>
+                            <td>9.5</td>
+                            <td class="score-high">9.5 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(8)">
+                            <td><strong>mohamedkiyaas</strong></td>
+                            <td>9</td>
+                            <td>8.5</td>
+                            <td class="score-high">8.75 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(9)">
+                            <td><strong>hamdanuur5837-tech</strong></td>
+                            <td>8</td>
+                            <td>7.5</td>
+                            <td class="score-med">7.75 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(10)">
+                            <td><strong>Abdifatah2024</strong></td>
+                            <td>8.5</td>
+                            <td>8.5</td>
+                            <td class="score-high">8.5 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(11)">
+                            <td><strong>cabdisalaan10</strong></td>
+                            <td>9</td>
+                            <td>9</td>
+                            <td class="score-high">9 / 10</td>
+                        </tr>
+                    
+                        <tr onclick="showStudent(12)">
+                            <td><strong>muniitaa123</strong></td>
+                            <td>8.5</td>
+                            <td>8</td>
+                            <td class="score-med">8.25 / 10</td>
+                        </tr>
+                    
                 </tbody>
             </table>
         </section>
 
         <!-- Student Views -->
-        ${studentData.map((s, index) => `
-            <section id="student-${index}" class="view-section">
+        
+            <section id="student-0" class="view-section">
                 <div class="student-header">
                     <div class="student-title">
-                        <h2>${s.name}</h2>
-                        <p>@${s.github}</p>
+                        <h2>Abdifatah Ali</h2>
+                        <p>@abdifataahali</p>
                     </div>
                     <div class="student-score">
                         Score
-                        <span>${s.score}/10</span>
+                        <span>9.25/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
                     <div class="feedback-card positive">
-                        <h3>✅ Positives</h3>
-                        <p>${s.positives}</p>
+                        <h3>Positives</h3>
+                        <p>The design closely matches the original mockup. HTML semantic tags are well utilized.</p>
                     </div>
                     <div class="feedback-card improve">
-                        <h3>🔧 Areas for Improvement</h3>
-                        <p>${s.improvements}</p>
+                        <h3>Areas for Improvement</h3>
+                        <p>The footer spacing is slightly cramped on the mobile view.</p>
                     </div>
                 </div>
 
                 <div class="screenshots-section">
                     <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', ${index})">💻 Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', ${index})">📱 Mobile View</button>
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 0)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 0)">Mobile View</button>
                     </div>
-                    <div class="img-container active" id="desktop-img-${index}">
-                        <img src="${s.desktopImg}" alt="Desktop Preview">
+                    <div class="img-container active" id="desktop-img-0">
+                        <img src="images/image_1.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-${index}">
-                        <img src="${s.mobileImg}" alt="Mobile Preview">
+                    <div class="img-container" id="mobile-img-0">
+                        <img src="images/image_2.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        `).join('')}
+        
+            <section id="student-1" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Zacki Abdulkadir</h2>
+                        <p>@ZakiOmer22</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>8.25/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Colors and typography are accurately implemented.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The buttons overlap on the mobile responsive view. The CSS code requires better organization.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 1)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 1)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-1">
+                        <img src="images/image_3.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-1">
+                        <img src="images/image_4.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-2" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Munira Osman</h2>
+                        <p>@cawoosman95-oss</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>9.00/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Excellent use of Flexbox in the features section. The mobile layout looks fantastic.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The top background image is slightly cut off when viewed on very large screens.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 2)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 2)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-2">
+                        <img src="images/image_5.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-2">
+                        <img src="images/image_6.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-3" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Suhayb Ali Adam</h2>
+                        <p>@suhaybali689-ui</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>9.25/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>The desktop design is a 100% match to the provided design. Hover effects are nicely implemented.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>Inconsistent class naming conventions (mixing camelCase and kebab-case).</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 3)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 3)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-3">
+                        <img src="images/image_7.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-3">
+                        <img src="images/image_8.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-4" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Zaki Barte</h2>
+                        <p>@ZakiBarte</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>7.75/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>The code is clean and highly readable.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>Missing box-shadows on the buttons. The margins between sections are too small, making the layout look cluttered.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 4)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 4)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-4">
+                        <img src="images/image_9.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-4">
+                        <img src="images/image_10.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-5" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Huda Khadar Awaale</h2>
+                        <p>@nuuramyaasin123-hue</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>7.75/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Great effort on the mobile layout, which scales down nicely.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>Missing `max-width` constraints on desktop sections, causing the content to stretch too far on wide screens. There is also a lot of repetitive CSS code.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 5)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 5)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-5">
+                        <img src="images/image_11.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-5">
+                        <img src="images/image_12.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-6" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Hussein Mohamud Mohamed</h2>
+                        <p>@inamahamud693-code</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>8.50/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Accurate color palette and good button sizing.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The alignment of the partner logos (Google, IBM) is slightly off in the desktop view.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 6)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 6)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-6">
+                        <img src="images/image_13.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-6">
+                        <img src="images/image_14.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-7" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Mohamed Omar</h2>
+                        <p>@mohamedk-11</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>9.50/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>One of the best submissions. Perfectly matched the design and responsiveness. The code is structured professionally.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>Nothing major. Adding an `ease-in-out` transition to the hover effects would make them smoother.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 7)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 7)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-7">
+                        <img src="images/image_15.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-7">
+                        <img src="images/image_16.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-8" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Mohamed Kiyas Mohamed</h2>
+                        <p>@mohamedkiyaas</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>8.75/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Well-structured HTML file. The layout is mostly accurate.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>A slight mismatch in typography (did not import the exact font from Google Fonts).</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 8)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 8)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-8">
+                        <img src="images/image_17.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-8">
+                        <img src="images/image_18.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-9" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Hamda Nuur Maxamuud</h2>
+                        <p>@hamdanuur5837-tech</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>7.75/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Good effort in laying out the core components and applying the primary colors. Successfully merged multiple PRs.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The CSS layout needs Flexbox or CSS Grid to properly align the image and text side-by-side on the desktop view. Currently, some elements stack vertically.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 9)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 9)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-9">
+                        <img src="images/image_19.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-9">
+                        <img src="images/image_20.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-10" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Abdifatah Ismail Abdi</h2>
+                        <p>@Abdifatah2024</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>8.50/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>The desktop design is excellent. Code structure follows best practices.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The horizontal paddings in the mobile version are too large, which squishes the text content.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 10)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 10)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-10">
+                        <img src="images/image_21.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-10">
+                        <img src="images/image_22.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-11" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Abdisalam Faysal</h2>
+                        <p>@cabdisalaan10</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>9.00/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Very clean implementation. Great use of Flexbox and images are well-balanced.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>Some image `alt` attributes are empty in the HTML, which is important for accessibility (a11y).</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 11)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 11)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-11">
+                        <img src="images/image_23.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-11">
+                        <img src="images/image_24.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
+            <section id="student-12" class="view-section">
+                <div class="student-header">
+                    <div class="student-title">
+                        <h2>Abdullahi Ali Nour</h2>
+                        <p>@muniitaa123</p>
+                    </div>
+                    <div class="student-score">
+                        Score
+                        <span>8.25/10</span>
+                    </div>
+                </div>
+
+                <div class="feedback-grid">
+                    <div class="feedback-card positive">
+                        <h3>Positives</h3>
+                        <p>Executed the responsive design well using appropriate Media Queries.</p>
+                    </div>
+                    <div class="feedback-card improve">
+                        <h3>Areas for Improvement</h3>
+                        <p>The buttons in the hero section differ in size compared to the design. CSS classes should be more semantic.</p>
+                    </div>
+                </div>
+
+                <div class="screenshots-section">
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 12)">Desktop View</button>
+                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 12)">Mobile View</button>
+                    </div>
+                    <div class="img-container active" id="desktop-img-12">
+                        <img src="images/image_25.png" alt="Desktop Preview">
+                    </div>
+                    <div class="img-container" id="mobile-img-12">
+                        <img src="images/image_26.png" alt="Mobile Preview">
+                    </div>
+                </div>
+            </section>
+        
 
     </main>
 

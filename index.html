@@ -3,263 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ardaykaab Academy | Clipboard Grading Report</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Clipboard Grading Report</title>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --primary: #ea580c; /* Ardaykaab Orange */
-            --primary-dark: #c2410c;
-            --bg-color: #0f172a; /* Dark background */
-            --surface: #1e293b; /* Card background */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+            --bg-base: #0a0a0a;
+            --bg-surface: #171717;
+            --bg-hover: #262626;
+            
+            --border-color: #262626;
+            --border-light: #404040;
+            
+            --text-main: #f5f5f5;
+            --text-muted: #a3a3a3;
+            
+            --accent: #f97316; /* Orange 500 */
+            --accent-hover: #ea580c;
+            --accent-transparent: rgba(249, 115, 22, 0.1);
+            
+            --success: #10b981;
+            --warning: #f59e0b;
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-base);
             color: var(--text-main);
-            line-height: 1.6;
             display: flex;
+            min-height: 100vh;
+            line-height: 1.5;
         }
+
+        /* Typography Utilities */
+        h1, h2, h3 { color: var(--text-main); font-weight: 600; }
+        p { color: var(--text-muted); }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .subtitle { color: var(--text-muted); font-size: 0.875rem; margin-top: 4px; }
 
         /* Sidebar */
         .sidebar {
-            width: 280px;
-            background-color: var(--surface);
-            height: 100vh;
-            position: fixed;
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
+            width: 300px;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            z-index: 10;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .sidebar-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .sidebar-header h2 {
-            font-size: 1.2rem;
-            color: var(--primary-dark);
-            font-weight: 700;
+        .sidebar-header h2 i {
+            color: var(--accent);
         }
 
         .nav-list {
-            list-style: none;
-            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 12px;
+            gap: 4px;
         }
 
         .nav-item {
-            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
+            text-decoration: none;
             color: var(--text-muted);
-            border-left: 4px solid transparent;
+            transition: all 0.2s ease;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: #1e293b;
-            color: var(--primary);
-            border-left: 4px solid var(--primary);
+        .nav-item:hover {
+            background-color: var(--bg-hover);
+            color: var(--text-main);
         }
-        
-        .nav-item .score-badge {
-            float: right;
-            background: #334155;
+
+        .nav-item.active {
+            background-color: var(--accent-transparent);
+            color: var(--accent);
+        }
+
+        .nav-item i {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            opacity: 0.7;
+        }
+
+        .nav-item.active i {
+            opacity: 1;
+        }
+
+        .nav-text {
+            flex-grow: 1;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-score {
+            font-size: 0.75rem;
+            background-color: var(--border-color);
+            color: var(--text-main);
             padding: 2px 8px;
             border-radius: 12px;
-            font-size: 0.8rem;
-            color: var(--text-main);
+        }
+        
+        .nav-item.active .nav-score {
+            background-color: var(--accent);
+            color: #fff;
         }
 
         /* Main Content */
         .main-content {
-            margin-left: 280px;
-            padding: 40px;
-            width: calc(100% - 280px);
-            min-height: 100vh;
+            flex: 1;
+            margin-left: 300px;
+            padding: 48px;
+            max-width: 1200px;
         }
 
         .view-section {
             display: none;
-            animation: fadeIn 0.4s ease forwards;
+            animation: fade-in 0.3s ease;
         }
+
         .view-section.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dashboard Styles */
-        .header-title {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            color: var(--text-main);
+        /* Dashboard Overview */
+        .section-header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
         
-        .header-subtitle {
-            color: var(--text-muted);
-            margin-bottom: 32px;
+        .section-header h1 {
+            font-size: 1.5rem;
         }
 
         .summary-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
         .card {
-            background: var(--surface);
-            padding: 24px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: var(--shadow);
-            text-align: center;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .card h3 { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
-        .card .value { font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+        .card-icon {
+            background-color: var(--accent-transparent);
+            color: var(--accent);
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-icon i {
+            width: 28px;
+            height: 28px;
+        }
+
+        .card-data h3 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .card-data .value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Table */
+        .table-container {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
 
         table {
             width: 100%;
-            background: var(--surface);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
             border-collapse: collapse;
-        }
-        th, td {
-            padding: 16px 24px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
         }
-        th { background-color: #0f172a; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;}
-        tr:hover td { background-color: #334155; cursor: pointer; }
-        
-        .score-high { color: #10b981; font-weight: 600; }
-        .score-med { color: #f59e0b; font-weight: 600; }
-        
-        /* Student View Styles */
-        .student-header {
-            background: var(--surface);
-            padding: 32px;
+
+        th {
+            background-color: rgba(255,255,255,0.02);
+            padding: 16px 24px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .clickable-row {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .clickable-row:hover {
+            background-color: var(--bg-hover);
+        }
+
+        /* Student View specific */
+        .score-display {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
             border-radius: 12px;
-            box-shadow: var(--shadow);
-            margin-bottom: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: right;
         }
-        
-        .student-title h2 { font-size: 1.8rem; margin-bottom: 4px; }
-        .student-title p { color: var(--text-muted); }
-        .student-score {
-            text-align: center;
-            background: #0f172a;
-            padding: 16px 32px;
-            border-radius: 12px;
-            color: var(--primary);
+
+        .score-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 2px;
         }
-        .student-score span { display: block; font-size: 2rem; font-weight: 700; }
-        
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
         .feedback-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 24px;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
+
         .feedback-card {
-            background: var(--surface);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 24px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
         }
-        .feedback-card.positive { border-top: 4px solid #10b981; }
-        .feedback-card.improve { border-top: 4px solid #f59e0b; }
-        .feedback-card h3 { margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: var(--text-main); font-weight: 600;}
-        
-        /* Toggle & Image Styles */
-        .toggle-container {
+
+        .card-header {
             display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            justify-content: center;
-        }
-        .toggle-btn {
-            background: var(--surface);
-            border: 2px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-muted);
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-        .toggle-btn.active {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: #334155;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
         }
         
-        .screenshots-section {
-            width: 100%;
-        }
-        .screenshots-section .img-container {
-            display: none;
-            background: var(--surface);
-            padding: 16px;
+        .card-header i { width: 20px; height: 20px; }
+        .card-header h3 { font-size: 1rem; color: var(--text-main); }
+        .feedback-card p { font-size: 0.875rem; line-height: 1.6; }
+
+        /* Tabs and Images */
+        .image-viewer {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn i { width: 16px; height: 16px; }
+
+        .tab-btn:hover {
+            background-color: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background-color: var(--text-main);
+            color: var(--bg-base);
+            border-color: var(--text-main);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
             text-align: center;
         }
-        .screenshots-section .img-container.active {
+
+        .tab-content.active {
             display: block;
-            animation: fadeIn 0.4s ease forwards;
         }
-        .screenshots-section .img-container img {
+
+        .tab-content img {
             max-width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            border-radius: 4px;
         }
 
-        /* Back to top button */
-        #goTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            display: none;
-            transition: all 0.3s;
-            z-index: 100;
-        }
-        #goTopBtn:hover { transform: translateY(-5px); background: var(--primary-dark); }
-
-        @media (max-width: 1024px) {
-            /* Responsive styles if needed */
-        }
-        
     </style>
 </head>
 <body>
@@ -267,77 +381,106 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2>Clipboard Grading</h2>
+            <h2><i data-lucide="clipboard-list"></i> Grading Report</h2>
         </div>
-        <ul class="nav-list" id="navList">
-            <li class="nav-item active" onclick="showDashboard()">Dashboard</li>
-            
-                <li class="nav-item" id="nav-0" onclick="showStudent(0)">
-                    abdifataahali
-                    <span class="score-badge">9.25</span>
-                </li>
-            
-                <li class="nav-item" id="nav-1" onclick="showStudent(1)">
-                    ZakiOmer22
-                    <span class="score-badge">8.25</span>
-                </li>
-            
-                <li class="nav-item" id="nav-2" onclick="showStudent(2)">
-                    cawoosman95-oss
-                    <span class="score-badge">9.00</span>
-                </li>
-            
-                <li class="nav-item" id="nav-3" onclick="showStudent(3)">
-                    suhaybali689-ui
-                    <span class="score-badge">9.25</span>
-                </li>
-            
-                <li class="nav-item" id="nav-4" onclick="showStudent(4)">
-                    ZakiBarte
-                    <span class="score-badge">7.75</span>
-                </li>
-            
-                <li class="nav-item" id="nav-5" onclick="showStudent(5)">
-                    nuuramyaasin123-hue
-                    <span class="score-badge">7.75</span>
-                </li>
-            
-                <li class="nav-item" id="nav-6" onclick="showStudent(6)">
-                    inamahamud693-code
-                    <span class="score-badge">8.50</span>
-                </li>
-            
-                <li class="nav-item" id="nav-7" onclick="showStudent(7)">
-                    mohamedk-11
-                    <span class="score-badge">9.50</span>
-                </li>
-            
-                <li class="nav-item" id="nav-8" onclick="showStudent(8)">
-                    mohamedkiyaas
-                    <span class="score-badge">8.75</span>
-                </li>
-            
-                <li class="nav-item" id="nav-9" onclick="showStudent(9)">
-                    hamdanuur5837-tech
-                    <span class="score-badge">7.75</span>
-                </li>
-            
-                <li class="nav-item" id="nav-10" onclick="showStudent(10)">
-                    Abdifatah2024
-                    <span class="score-badge">8.50</span>
-                </li>
-            
-                <li class="nav-item" id="nav-11" onclick="showStudent(11)">
-                    cabdisalaan10
-                    <span class="score-badge">9.00</span>
-                </li>
-            
-                <li class="nav-item" id="nav-12" onclick="showStudent(12)">
-                    muniitaa123
-                    <span class="score-badge">8.25</span>
-                </li>
-            
-        </ul>
+        <nav class="nav-list">
+            <a href="#dashboard" class="nav-item active" data-target="dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <div class="nav-text">Dashboard</div>
+            </a>
+
+            <a href="#student-0" class="nav-item" data-target="student-0">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">abdifataahali</span>
+                </div>
+                <span class="nav-score">9.25</span>
+            </a>
+            <a href="#student-1" class="nav-item" data-target="student-1">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">ZakiOmer22</span>
+                </div>
+                <span class="nav-score">8.25</span>
+            </a>
+            <a href="#student-2" class="nav-item" data-target="student-2">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">cawoosman95-oss</span>
+                </div>
+                <span class="nav-score">9.00</span>
+            </a>
+            <a href="#student-3" class="nav-item" data-target="student-3">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">suhaybali689-ui</span>
+                </div>
+                <span class="nav-score">9.25</span>
+            </a>
+            <a href="#student-4" class="nav-item" data-target="student-4">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">ZakiBarte</span>
+                </div>
+                <span class="nav-score">7.75</span>
+            </a>
+            <a href="#student-5" class="nav-item" data-target="student-5">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">nuuramyaasin123-hue</span>
+                </div>
+                <span class="nav-score">7.75</span>
+            </a>
+            <a href="#student-6" class="nav-item" data-target="student-6">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">inamahamud693-code</span>
+                </div>
+                <span class="nav-score">8.50</span>
+            </a>
+            <a href="#student-7" class="nav-item" data-target="student-7">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">mohamedk-11</span>
+                </div>
+                <span class="nav-score">9.50</span>
+            </a>
+            <a href="#student-8" class="nav-item" data-target="student-8">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">mohamedkiyaas</span>
+                </div>
+                <span class="nav-score">8.75</span>
+            </a>
+            <a href="#student-9" class="nav-item" data-target="student-9">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">hamdanuur5837-tech</span>
+                </div>
+                <span class="nav-score">7.75</span>
+            </a>
+            <a href="#student-10" class="nav-item" data-target="student-10">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">Abdifatah2024</span>
+                </div>
+                <span class="nav-score">8.50</span>
+            </a>
+            <a href="#student-11" class="nav-item" data-target="student-11">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">cabdisalaan10</span>
+                </div>
+                <span class="nav-score">9.00</span>
+            </a>
+            <a href="#student-12" class="nav-item" data-target="student-12">
+                <i data-lucide="user"></i>
+                <div class="nav-text">
+                    <span class="nav-name">muniitaa123</span>
+                </div>
+                <span class="nav-score">8.25</span>
+            </a>
+        </nav>
     </aside>
 
     <!-- Main Content -->
@@ -345,657 +488,786 @@
         
         <!-- Dashboard View -->
         <section id="dashboard" class="view-section active">
-            <h1 class="header-title">Grading Dashboard</h1>
-            <p class="header-subtitle">Overview of student submissions for Clipboard Landing Page.</p>
+            <div class="section-header">
+                <div>
+                    <h1>Overview</h1>
+                    <p class="subtitle">Clipboard Landing Page Submissions</p>
+                </div>
+            </div>
             
             <div class="summary-cards">
                 <div class="card">
-                    <h3>Total Submissions</h3>
-                    <div class="value">13</div>
+                    <div class="card-icon"><i data-lucide="users"></i></div>
+                    <div class="card-data">
+                        <h3>Total Submissions</h3>
+                        <div class="value">13</div>
+                    </div>
                 </div>
                 <div class="card">
-                    <h3>Average Score</h3>
-                    <div class="value">8.58</div>
+                    <div class="card-icon"><i data-lucide="bar-chart-2"></i></div>
+                    <div class="card-data">
+                        <h3>Average Score</h3>
+                        <div class="value">8.58</div>
+                    </div>
                 </div>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student GitHub</th>
-                        <th>Design Score</th>
-                        <th>Code Score</th>
-                        <th>Overall Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                        <tr onclick="showStudent(0)">
-                            <td><strong>abdifataahali</strong></td>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student GitHub</th>
+                            <th>Design</th>
+                            <th>Code</th>
+                            <th>Overall</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="clickable-row" data-target="student-0">
+                            <td class="font-medium">abdifataahali</td>
                             <td>9</td>
                             <td>9.5</td>
-                            <td class="score-high">9.25 / 10</td>
+                            <td class="text-success font-semibold">9.25</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(1)">
-                            <td><strong>ZakiOmer22</strong></td>
+                        <tr class="clickable-row" data-target="student-1">
+                            <td class="font-medium">ZakiOmer22</td>
                             <td>8.5</td>
                             <td>8</td>
-                            <td class="score-med">8.25 / 10</td>
+                            <td class="text-warning font-semibold">8.25</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(2)">
-                            <td><strong>cawoosman95-oss</strong></td>
+                        <tr class="clickable-row" data-target="student-2">
+                            <td class="font-medium">cawoosman95-oss</td>
                             <td>9</td>
                             <td>9</td>
-                            <td class="score-high">9 / 10</td>
+                            <td class="text-success font-semibold">9</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(3)">
-                            <td><strong>suhaybali689-ui</strong></td>
+                        <tr class="clickable-row" data-target="student-3">
+                            <td class="font-medium">suhaybali689-ui</td>
                             <td>9.5</td>
                             <td>9</td>
-                            <td class="score-high">9.25 / 10</td>
+                            <td class="text-success font-semibold">9.25</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(4)">
-                            <td><strong>ZakiBarte</strong></td>
+                        <tr class="clickable-row" data-target="student-4">
+                            <td class="font-medium">ZakiBarte</td>
                             <td>8</td>
                             <td>7.5</td>
-                            <td class="score-med">7.75 / 10</td>
+                            <td class="text-warning font-semibold">7.75</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(5)">
-                            <td><strong>nuuramyaasin123-hue</strong></td>
+                        <tr class="clickable-row" data-target="student-5">
+                            <td class="font-medium">nuuramyaasin123-hue</td>
                             <td>7.5</td>
                             <td>8</td>
-                            <td class="score-med">7.75 / 10</td>
+                            <td class="text-warning font-semibold">7.75</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(6)">
-                            <td><strong>inamahamud693-code</strong></td>
+                        <tr class="clickable-row" data-target="student-6">
+                            <td class="font-medium">inamahamud693-code</td>
                             <td>8.5</td>
                             <td>8.5</td>
-                            <td class="score-high">8.5 / 10</td>
+                            <td class="text-success font-semibold">8.5</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(7)">
-                            <td><strong>mohamedk-11</strong></td>
+                        <tr class="clickable-row" data-target="student-7">
+                            <td class="font-medium">mohamedk-11</td>
                             <td>9.5</td>
                             <td>9.5</td>
-                            <td class="score-high">9.5 / 10</td>
+                            <td class="text-success font-semibold">9.5</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(8)">
-                            <td><strong>mohamedkiyaas</strong></td>
+                        <tr class="clickable-row" data-target="student-8">
+                            <td class="font-medium">mohamedkiyaas</td>
                             <td>9</td>
                             <td>8.5</td>
-                            <td class="score-high">8.75 / 10</td>
+                            <td class="text-success font-semibold">8.75</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(9)">
-                            <td><strong>hamdanuur5837-tech</strong></td>
+                        <tr class="clickable-row" data-target="student-9">
+                            <td class="font-medium">hamdanuur5837-tech</td>
                             <td>8</td>
                             <td>7.5</td>
-                            <td class="score-med">7.75 / 10</td>
+                            <td class="text-warning font-semibold">7.75</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(10)">
-                            <td><strong>Abdifatah2024</strong></td>
+                        <tr class="clickable-row" data-target="student-10">
+                            <td class="font-medium">Abdifatah2024</td>
                             <td>8.5</td>
                             <td>8.5</td>
-                            <td class="score-high">8.5 / 10</td>
+                            <td class="text-success font-semibold">8.5</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(11)">
-                            <td><strong>cabdisalaan10</strong></td>
+                        <tr class="clickable-row" data-target="student-11">
+                            <td class="font-medium">cabdisalaan10</td>
                             <td>9</td>
                             <td>9</td>
-                            <td class="score-high">9 / 10</td>
+                            <td class="text-success font-semibold">9</td>
                         </tr>
-                    
-                        <tr onclick="showStudent(12)">
-                            <td><strong>muniitaa123</strong></td>
+                        <tr class="clickable-row" data-target="student-12">
+                            <td class="font-medium">muniitaa123</td>
                             <td>8.5</td>
                             <td>8</td>
-                            <td class="score-med">8.25 / 10</td>
+                            <td class="text-warning font-semibold">8.25</td>
                         </tr>
-                    
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
-        <!-- Student Views -->
-        
+
             <section id="student-0" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Abdifatah Ali</h2>
-                        <p>@abdifataahali</p>
+                        <p class="subtitle">@abdifataahali</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>9.25/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">9.25/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>The design closely matches the original mockup. HTML semantic tags are well utilized.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The footer spacing is slightly cramped on the mobile view.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 0)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 0)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-0">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-0">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-0">
+                    <div class="tab-content active" id="desktop-0">
                         <img src="images/image_1.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-0">
+                    <div class="tab-content" id="mobile-0">
                         <img src="images/image_2.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-1" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Zacki Abdulkadir</h2>
-                        <p>@ZakiOmer22</p>
+                        <p class="subtitle">@ZakiOmer22</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>8.25/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">8.25/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Colors and typography are accurately implemented.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The buttons overlap on the mobile responsive view. The CSS code requires better organization.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 1)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 1)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-1">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-1">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-1">
+                    <div class="tab-content active" id="desktop-1">
                         <img src="images/image_3.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-1">
+                    <div class="tab-content" id="mobile-1">
                         <img src="images/image_4.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-2" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Munira Osman</h2>
-                        <p>@cawoosman95-oss</p>
+                        <p class="subtitle">@cawoosman95-oss</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>9.00/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">9.00/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Excellent use of Flexbox in the features section. The mobile layout looks fantastic.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The top background image is slightly cut off when viewed on very large screens.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 2)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 2)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-2">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-2">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-2">
+                    <div class="tab-content active" id="desktop-2">
                         <img src="images/image_5.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-2">
+                    <div class="tab-content" id="mobile-2">
                         <img src="images/image_6.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-3" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Suhayb Ali Adam</h2>
-                        <p>@suhaybali689-ui</p>
+                        <p class="subtitle">@suhaybali689-ui</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>9.25/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">9.25/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>The desktop design is a 100% match to the provided design. Hover effects are nicely implemented.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>Inconsistent class naming conventions (mixing camelCase and kebab-case).</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 3)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 3)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-3">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-3">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-3">
+                    <div class="tab-content active" id="desktop-3">
                         <img src="images/image_7.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-3">
+                    <div class="tab-content" id="mobile-3">
                         <img src="images/image_8.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-4" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Zaki Barte</h2>
-                        <p>@ZakiBarte</p>
+                        <p class="subtitle">@ZakiBarte</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>7.75/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">7.75/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>The code is clean and highly readable.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>Missing box-shadows on the buttons. The margins between sections are too small, making the layout look cluttered.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 4)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 4)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-4">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-4">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-4">
+                    <div class="tab-content active" id="desktop-4">
                         <img src="images/image_9.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-4">
+                    <div class="tab-content" id="mobile-4">
                         <img src="images/image_10.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-5" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Huda Khadar Awaale</h2>
-                        <p>@nuuramyaasin123-hue</p>
+                        <p class="subtitle">@nuuramyaasin123-hue</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>7.75/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">7.75/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Great effort on the mobile layout, which scales down nicely.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>Missing `max-width` constraints on desktop sections, causing the content to stretch too far on wide screens. There is also a lot of repetitive CSS code.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 5)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 5)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-5">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-5">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-5">
+                    <div class="tab-content active" id="desktop-5">
                         <img src="images/image_11.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-5">
+                    <div class="tab-content" id="mobile-5">
                         <img src="images/image_12.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-6" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Hussein Mohamud Mohamed</h2>
-                        <p>@inamahamud693-code</p>
+                        <p class="subtitle">@inamahamud693-code</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>8.50/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">8.50/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Accurate color palette and good button sizing.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The alignment of the partner logos (Google, IBM) is slightly off in the desktop view.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 6)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 6)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-6">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-6">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-6">
+                    <div class="tab-content active" id="desktop-6">
                         <img src="images/image_13.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-6">
+                    <div class="tab-content" id="mobile-6">
                         <img src="images/image_14.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-7" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Mohamed Omar</h2>
-                        <p>@mohamedk-11</p>
+                        <p class="subtitle">@mohamedk-11</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>9.50/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">9.50/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>One of the best submissions. Perfectly matched the design and responsiveness. The code is structured professionally.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>Nothing major. Adding an `ease-in-out` transition to the hover effects would make them smoother.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 7)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 7)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-7">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-7">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-7">
+                    <div class="tab-content active" id="desktop-7">
                         <img src="images/image_15.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-7">
+                    <div class="tab-content" id="mobile-7">
                         <img src="images/image_16.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-8" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Mohamed Kiyas Mohamed</h2>
-                        <p>@mohamedkiyaas</p>
+                        <p class="subtitle">@mohamedkiyaas</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>8.75/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">8.75/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Well-structured HTML file. The layout is mostly accurate.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>A slight mismatch in typography (did not import the exact font from Google Fonts).</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 8)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 8)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-8">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-8">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-8">
+                    <div class="tab-content active" id="desktop-8">
                         <img src="images/image_17.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-8">
+                    <div class="tab-content" id="mobile-8">
                         <img src="images/image_18.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-9" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Hamda Nuur Maxamuud</h2>
-                        <p>@hamdanuur5837-tech</p>
+                        <p class="subtitle">@hamdanuur5837-tech</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>7.75/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">7.75/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Good effort in laying out the core components and applying the primary colors. Successfully merged multiple PRs.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The CSS layout needs Flexbox or CSS Grid to properly align the image and text side-by-side on the desktop view. Currently, some elements stack vertically.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 9)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 9)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-9">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-9">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-9">
+                    <div class="tab-content active" id="desktop-9">
                         <img src="images/image_19.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-9">
+                    <div class="tab-content" id="mobile-9">
                         <img src="images/image_20.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-10" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Abdifatah Ismail Abdi</h2>
-                        <p>@Abdifatah2024</p>
+                        <p class="subtitle">@Abdifatah2024</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>8.50/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">8.50/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>The desktop design is excellent. Code structure follows best practices.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The horizontal paddings in the mobile version are too large, which squishes the text content.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 10)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 10)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-10">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-10">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-10">
+                    <div class="tab-content active" id="desktop-10">
                         <img src="images/image_21.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-10">
+                    <div class="tab-content" id="mobile-10">
                         <img src="images/image_22.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-11" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Abdisalam Faysal</h2>
-                        <p>@cabdisalaan10</p>
+                        <p class="subtitle">@cabdisalaan10</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>9.00/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">9.00/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Very clean implementation. Great use of Flexbox and images are well-balanced.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>Some image `alt` attributes are empty in the HTML, which is important for accessibility (a11y).</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 11)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 11)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-11">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-11">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-11">
+                    <div class="tab-content active" id="desktop-11">
                         <img src="images/image_23.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-11">
+                    <div class="tab-content" id="mobile-11">
                         <img src="images/image_24.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
             <section id="student-12" class="view-section">
-                <div class="student-header">
-                    <div class="student-title">
+                <div class="section-header">
+                    <div>
                         <h2>Abdullahi Ali Nour</h2>
-                        <p>@muniitaa123</p>
+                        <p class="subtitle">@muniitaa123</p>
                     </div>
-                    <div class="student-score">
-                        Score
-                        <span>8.25/10</span>
+                    <div class="score-display">
+                        <span class="score-label">Score</span>
+                        <span class="score-value">8.25/10</span>
                     </div>
                 </div>
 
                 <div class="feedback-grid">
-                    <div class="feedback-card positive">
-                        <h3>Positives</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-success">
+                            <i data-lucide="check-circle-2"></i>
+                            <h3>Positives</h3>
+                        </div>
                         <p>Executed the responsive design well using appropriate Media Queries.</p>
                     </div>
-                    <div class="feedback-card improve">
-                        <h3>Areas for Improvement</h3>
+                    <div class="feedback-card">
+                        <div class="card-header text-warning">
+                            <i data-lucide="alert-circle"></i>
+                            <h3>Areas for Improvement</h3>
+                        </div>
                         <p>The buttons in the hero section differ in size compared to the design. CSS classes should be more semantic.</p>
                     </div>
                 </div>
 
-                <div class="screenshots-section">
-                    <div class="toggle-container">
-                        <button class="toggle-btn active" onclick="switchTab(this, 'desktop', 12)">Desktop View</button>
-                        <button class="toggle-btn" onclick="switchTab(this, 'mobile', 12)">Mobile View</button>
+                <div class="image-viewer">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="desktop-12">
+                            <i data-lucide="monitor"></i> Desktop View
+                        </button>
+                        <button class="tab-btn" data-tab="mobile-12">
+                            <i data-lucide="smartphone"></i> Mobile View
+                        </button>
                     </div>
-                    <div class="img-container active" id="desktop-img-12">
+                    <div class="tab-content active" id="desktop-12">
                         <img src="images/image_25.png" alt="Desktop Preview">
                     </div>
-                    <div class="img-container" id="mobile-img-12">
+                    <div class="tab-content" id="mobile-12">
                         <img src="images/image_26.png" alt="Mobile Preview">
                     </div>
                 </div>
             </section>
-        
 
     </main>
 
-    <button id="goTopBtn" onclick="scrollToTop()">↑</button>
-
     <script>
-        function showDashboard() {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navigation Logic
+        const navItems = document.querySelectorAll('.nav-item');
+        const viewSections = document.querySelectorAll('.view-section');
+        const clickableRows = document.querySelectorAll('.clickable-row');
+
+        function activateSection(targetId) {
+            viewSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const targetSection = document.getElementById(targetId);
+            const targetNav = document.querySelector(`.nav-item[data-target="${targetId}"]`);
+
+            if(targetSection) targetSection.classList.add('active');
+            if(targetNav) targetNav.classList.add('active');
             
-            document.getElementById('dashboard').classList.add('active');
-            document.querySelector('.nav-item').classList.add('active'); // Dashboard nav
             window.scrollTo(0,0);
         }
 
-        function showStudent(index) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById('student-' + index).classList.add('active');
-            document.getElementById('nav-' + index).classList.add('active');
-            window.scrollTo(0,0);
-        }
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = item.getAttribute('data-target');
+                activateSection(target);
+            });
+        });
 
-        // Scroll to top functionality
-        window.onscroll = function() {
-            const topBtn = document.getElementById("goTopBtn");
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                topBtn.style.display = "block";
-            } else {
-                topBtn.style.display = "none";
-            }
-        };
+        clickableRows.forEach(row => {
+            row.addEventListener('click', () => {
+                const target = row.getAttribute('data-target');
+                activateSection(target);
+            });
+        });
 
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
+        // Tab Logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Find parent image-viewer context to isolate tabs
+                const parent = btn.closest('.image-viewer');
+                const allBtns = parent.querySelectorAll('.tab-btn');
+                const allContents = parent.querySelectorAll('.tab-content');
 
-        function switchTab(btn, type, index) {
-            const container = btn.parentElement;
-            container.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+                allBtns.forEach(b => b.classList.remove('active'));
+                allContents.forEach(c => c.classList.remove('active'));
 
-            document.getElementById('desktop-img-' + index).classList.remove('active');
-            document.getElementById('mobile-img-' + index).classList.remove('active');
-
-            document.getElementById(type + '-img-' + index).classList.add('active');
-        }
+                btn.classList.add('active');
+                parent.querySelector(`#${tabId}`).classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
